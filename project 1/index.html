@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ff">
+  <title>Student Registration | Gatherly</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #201b32;
+      background: #f5f3ff;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+      background:
+        radial-gradient(ellipse at 8% 12%, rgb(221 214 254 / 72%), transparent 36%),
+        radial-gradient(ellipse at 93% 92%, rgb(254 215 170 / 55%), transparent 35%),
+        #f8f7fc;
+    }
+
+    .signup-card {
+      width: min(100%, 760px);
+      padding: 40px;
+      border: 1px solid rgb(255 255 255 / 85%);
+      border-radius: 20px;
+      background: rgb(255 255 255 / 94%);
+      box-shadow: 0 24px 80px rgb(36 25 77 / 10%);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+      color: #5639c5;
+      font-size: 1.1rem;
+      font-weight: 750;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: #ede9fe;
+      font-size: 1.15rem;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.7rem, 5vw, 2rem);
+      letter-spacing: -0.045em;
+    }
+
+    .intro {
+      margin: 0 0 28px;
+      color: #716b80;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .section-title {
+      margin: 26px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eeeaf5;
+      color: #5639c5;
+      font-size: 0.8rem;
+      font-weight: 750;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 18px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field--wide {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.875rem;
+      font-weight: 650;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      border: 1px solid #e2deea;
+      border-radius: 9px;
+      background: #fff;
+      color: inherit;
+      font: inherit;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
+    }
+
+    textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #aaa4b5;
+    }
+
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: none;
+      border-color: #7559df;
+      box-shadow: 0 0 0 3px rgb(117 89 223 / 16%);
+    }
+
+    input[aria-invalid="true"],
+    select[aria-invalid="true"],
+    textarea[aria-invalid="true"] {
+      border-color: #d34f62;
+    }
+
+    input[aria-invalid="true"]:focus-visible,
+    select[aria-invalid="true"]:focus-visible,
+    textarea[aria-invalid="true"]:focus-visible {
+      box-shadow: 0 0 0 3px rgb(211 79 98 / 14%);
+    }
+
+    .error {
+      min-height: 1.25em;
+      margin: 6px 0 0;
+      color: #b4233a;
+      font-size: 0.8rem;
+    }
+
+    button {
+      width: 100%;
+      min-height: 49px;
+      margin-top: 6px;
+      border: 0;
+      border-radius: 9px;
+      background: #6548d1;
+      color: #fff;
+      font: inherit;
+      font-weight: 650;
+      cursor: pointer;
+      transition: background-color 140ms ease, transform 140ms ease;
+    }
+
+    button:not(:disabled):hover {
+      transform: translateY(-1px);
+      background: #5337bd;
+    }
+
+    button:focus-visible {
+      outline: 3px solid rgb(101 72 209 / 30%);
+      outline-offset: 3px;
+    }
+
+    button:disabled {
+      background: #c8c1de;
+      cursor: not-allowed;
+    }
+
+    .form-status {
+      min-height: 1.4em;
+      margin: 14px 0 0;
+      color: #287653;
+      font-size: 0.875rem;
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      .signup-card {
+        padding: 32px 24px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .field--wide {
+        grid-column: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="signup-card">
+    <div class="brand" aria-label="Gatherly">
+      <span class="brand-mark" aria-hidden="true">âœ³</span>
+      <span>gatherly</span>
+    </div>
+
+    <h1>Student registration</h1>
+    <p class="intro">Enter your details to get started with Gatherly.</p>
+
+    <form id="registration-form" novalidate>
+      <h2 class="section-title">Personal details</h2>
+      <div class="field-grid">
+        <div class="field">
+          <label for="first-name">First name</label>
+          <input id="first-name" name="firstName" type="text" placeholder="First name" autocomplete="given-name" aria-describedby="first-name-error" required>
+          <p class="error" id="first-name-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="last-name">Second name</label>
+          <input id="last-name" name="lastName" type="text" placeholder="Second name" autocomplete="family-name" aria-describedby="last-name-error" required>
+          <p class="error" id="last-name-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="date-of-birth">Date of birth</label>
+          <input id="date-of-birth" name="dateOfBirth" type="date" autocomplete="bday" aria-describedby="date-of-birth-error" required>
+          <p class="error" id="date-of-birth-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" autocomplete="sex" aria-describedby="gender-error" required>
+            <option value="">Select gender</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+            <option value="non-binary">Non-binary</option>
+            <option value="other">Other</option>
+            <option value="prefer-not-to-say">Prefer not to say</option>
+          </select>
+          <p class="error" id="gender-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="roll-number">Roll number</label>
+          <input id="roll-number" name="rollNumber" type="text" placeholder="Your roll number" aria-describedby="roll-number-error" required>
+          <p class="error" id="roll-number-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="course">Course</label>
+          <input id="course" name="course" type="text" placeholder="Your course" aria-describedby="course-error" required>
+          <p class="error" id="course-error"></p>
+        </div>
+
+        <div class="field field--wide">
+          <label for="address">Address</label>
+          <textarea id="address" name="address" placeholder="Street, city, state or region" autocomplete="street-address" aria-describedby="address-error" required></textarea>
+          <p class="error" id="address-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="country">Country</label>
+          <input id="country" name="country" type="text" placeholder="Your country" autocomplete="country-name" aria-describedby="country-error" required>
+          <p class="error" id="country-error"></p>
+        </div>
+      </div>
+
+      <h2 class="section-title">Contact and account</h2>
+      <div class="field-grid">
+        <div class="field">
+          <label for="contact-number">Contact number</label>
+          <input id="contact-number" name="contactNumber" type="tel" placeholder="+1 555 123 4567" autocomplete="tel" aria-describedby="contact-number-error" required>
+          <p class="error" id="contact-number-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" aria-describedby="email-error" required>
+          <p class="error" id="email-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="user-id">User ID</label>
+          <input id="user-id" name="userId" type="text" placeholder="3â€“20 letters, numbers, _ or -" autocomplete="username" aria-describedby="user-id-error" required>
+          <p class="error" id="user-id-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" aria-describedby="password-error" required>
+          <p class="error" id="password-error"></p>
+        </div>
+      </div>
+
+      <button id="submit-button" type="submit" disabled>Submit registration</button>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <script>
+    const form = document.querySelector("#registration-form");
+    const firstNameInput = document.querySelector("#first-name");
+    const lastNameInput = document.querySelector("#last-name");
+    const dateOfBirthInput = document.querySelector("#date-of-birth");
+    const genderInput = document.querySelector("#gender");
+    const rollNumberInput = document.querySelector("#roll-number");
+    const courseInput = document.querySelector("#course");
+    const addressInput = document.querySelector("#address");
+    const countryInput = document.querySelector("#country");
+    const contactNumberInput = document.querySelector("#contact-number");
+    const emailInput = document.querySelector("#email");
+    const userIdInput = document.querySelector("#user-id");
+    const passwordInput = document.querySelector("#password");
+    const submitButton = document.querySelector("#submit-button");
+    const formStatus = document.querySelector("#form-status");
+
+    const fields = [
+      { input: firstNameInput, error: document.querySelector("#first-name-error"), validate: validateFirstName },
+      { input: lastNameInput, error: document.querySelector("#last-name-error"), validate: validateLastName },
+      { input: dateOfBirthInput, error: document.querySelector("#date-of-birth-error"), validate: validateDateOfBirth },
+      { input: genderInput, error: document.querySelector("#gender-error"), validate: validateGender },
+      { input: rollNumberInput, error: document.querySelector("#roll-number-error"), validate: validateRollNumber },
+      { input: courseInput, error: document.querySelector("#course-error"), validate: validateCourse },
+      { input: addressInput, error: document.querySelector("#address-error"), validate: validateAddress },
+      { input: countryInput, error: document.querySelector("#country-error"), validate: validateCountry },
+      { input: contactNumberInput, error: document.querySelector("#contact-number-error"), validate: validateContactNumber },
+      { input: emailInput, error: document.querySelector("#email-error"), validate: validateEmail },
+      { input: userIdInput, error: document.querySelector("#user-id-error"), validate: validateUserId },
+      { input: passwordInput, error: document.querySelector("#password-error"), validate: validatePassword }
+    ];
+
+    function validateFirstName() {
+      return firstNameInput.value.trim() ? "" : "Please enter your first name.";
+    }
+
+    function validateLastName() {
+      return lastNameInput.value.trim() ? "" : "Please enter your second name.";
+    }
+
+    function validateDateOfBirth() {
+      if (!dateOfBirthInput.value) {
+        return "Please enter your date of birth.";
+      }
+
+      const selectedDate = new Date(`${dateOfBirthInput.value}T00:00:00`);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      return selectedDate <= today ? "" : "Date of birth cannot be in the future.";
+    }
+
+    function validateGender() {
+      return genderInput.value ? "" : "Please select a gender.";
+    }
+
+    function validateRollNumber() {
+      return rollNumberInput.value.trim() ? "" : "Please enter your roll number.";
+    }
+
+    function validateCourse() {
+      return courseInput.value.trim() ? "" : "Please enter your course.";
+    }
+
+    function validateAddress() {
+      return addressInput.value.trim() ? "" : "Please enter your address.";
+    }
+
+    function validateContactNumber() {
+      const digits = contactNumberInput.value.replace(/\D/g, "");
+
+      if (!contactNumberInput.value.trim()) {
+        return "Please enter your contact number.";
+      }
+
+      if (!/^[\d+().\s-]+$/.test(contactNumberInput.value)) {
+        return "Use only numbers and common phone number characters.";
+      }
+
+      return digits.length >= 7 && digits.length <= 15 ? "" : "Enter a valid number with 7â€“15 digits.";
+    }
+
+    function validateEmail() {
+      if (!emailInput.value.trim()) {
+        return "Please enter your email address.";
+      }
+
+      return emailInput.validity.valid ? "" : "Please enter a valid email address.";
+    }
+
+    function validateUserId() {
+      if (!userIdInput.value.trim()) {
+        return "Please enter a user ID.";
+      }
+
+      return /^[a-zA-Z0-9_-]{3,20}$/.test(userIdInput.value)
+        ? ""
+        : "Use 3â€“20 letters, numbers, underscores, or hyphens.";
+    }
+
+    function validatePassword() {
+      if (!passwordInput.value) {
+        return "Please enter a password.";
+      }
+
+      return passwordInput.value.length >= 6 ? "" : "Password must be at least 6 characters.";
+    }
+
+    function validateCountry() {
+      return countryInput.value.trim() ? "" : "Please enter your country.";
+    }
+
+    function updateValidation({ input, error, validate }) {
+      const message = validate();
+      error.textContent = message;
+
+      if (message) {
+        input.setAttribute("aria-invalid", "true");
+      } else {
+        input.removeAttribute("aria-invalid");
+      }
+
+      submitButton.disabled = fields.some((field) => field.validate() !== "");
+    }
+
+    fields.forEach((field) => {
+      field.input.addEventListener("input", () => {
+        formStatus.textContent = "";
+        updateValidation(field);
+      });
+
+      field.input.addEventListener("blur", () => updateValidation(field));
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      fields.forEach(updateValidation);
+
+      if (submitButton.disabled) {
+        formStatus.textContent = "";
+        return;
+      }
+
+      formStatus.textContent = "All fields are valid. Your account is ready to create.";
+    });
+  </script>
+</body>
+</html>
