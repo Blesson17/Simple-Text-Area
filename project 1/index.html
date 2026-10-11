@@ -223,7 +223,7 @@
 <body>
   <main class="signup-card">
     <div class="brand" aria-label="Gatherly">
-      <span class="brand-mark" aria-hidden="true">âœ³</span>
+      <span class="brand-mark" aria-hidden="true">G</span>
       <span>gatherly</span>
     </div>
 
@@ -305,7 +305,7 @@
 
         <div class="field">
           <label for="user-id">User ID</label>
-          <input id="user-id" name="userId" type="text" placeholder="3â€“20 letters, numbers, _ or -" autocomplete="username" aria-describedby="user-id-error" required>
+          <input id="user-id" name="userId" type="text" placeholder="3-20 letters, numbers, _ or -" autocomplete="username" aria-describedby="user-id-error" required>
           <p class="error" id="user-id-error"></p>
         </div>
 
@@ -400,7 +400,7 @@
         return "Use only numbers and common phone number characters.";
       }
 
-      return digits.length >= 7 && digits.length <= 15 ? "" : "Enter a valid number with 7â€“15 digits.";
+      return digits.length >= 7 && digits.length <= 15 ? "" : "Enter a valid number with 7-15 digits.";
     }
 
     function validateEmail() {
@@ -418,7 +418,7 @@
 
       return /^[a-zA-Z0-9_-]{3,20}$/.test(userIdInput.value)
         ? ""
-        : "Use 3â€“20 letters, numbers, underscores, or hyphens.";
+        : "Use 3-20 letters, numbers, underscores, or hyphens.";
     }
 
     function validatePassword() {
